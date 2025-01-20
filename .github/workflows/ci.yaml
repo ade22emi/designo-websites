@@ -1,0 +1,18 @@
+# workflow name
+name: CI
+# Define when to trigger the workflow
+on:
+  push: #the event that occurs
+    branches:
+        - main
+jobs:
+    print-greeting:
+        runs-on: ubuntu-latest
+
+        #define steps to execute
+        steps:
+           - name: check out the code # This checkout the github repository created 
+             uses: actions/checkout@v3
+              
+           - name: Print Greeting
+             run: echo "hello world"
