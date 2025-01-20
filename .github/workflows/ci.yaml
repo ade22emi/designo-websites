@@ -4,7 +4,7 @@ name: CI
 on:
   push: #the event that occurs
     branches:
-        - main
+        - master
 jobs:
     print-greeting:
         runs-on: ubuntu-latest
