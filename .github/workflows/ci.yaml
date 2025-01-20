@@ -11,7 +11,7 @@ jobs:
 
         #define steps to execute
         steps:
-           - name: check out the code # This checkout the github repository created 
+           - name: check out the code base # This checkout the github repository created 
              uses: actions/checkout@v3
               
            - name: Print Greeting
