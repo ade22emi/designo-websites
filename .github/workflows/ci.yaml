@@ -29,13 +29,13 @@ jobs:
 
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          
+
       - name: login docker hube
         run: echo  ${{ secrets.DOCKER_TOKEN }}   
 
       - name: Build the Docker image
         env:
-          image_name: Test-image
+          image_name: test-image
           version: 1.0.0
           username: ${{ secrets.DOCKER_USERNAME }}
         run: |
