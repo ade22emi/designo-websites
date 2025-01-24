@@ -5,7 +5,7 @@ name: CI
 on:
   push: # The event that occurs
     branches:
-        - main
+        - master
 jobs:
     test-and-build:
         runs-on: ubuntu-latest
