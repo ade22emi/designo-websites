@@ -1,42 +1,48 @@
+# Workflow Name
 name: CI
 
 # Define when to trigger the workflow
 on:
-  push:
+  push: # The event that occurs
     branches:
-      - master
-
+        - main
 jobs:
-  print-greeting:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the code
-        uses: actions/checkout@v3
+    test-and-build:
+        runs-on: ubuntu-latest
 
-      - name: Print Greeting
-        run: echo "Hello world"
+        # Define steps to execute
+        steps:
+          - name: Check out the code # This checks out the GitHub repository
+            uses: actions/checkout@v3
 
-      - name: Create directory and file
-        run: |
-          mkdir user
-          cd user
-          touch name.txt
-          echo "Hello World!" > name.txt
+          - name: Install Chromium browser
+            run: sudo apt-get install -y chromium-browser
 
-      - name: Install Docker Engine
-        uses: docker/login-action@v3
-        with:
+          - name: Install dependencies
+            run: sudo apt-get install -y npm
 
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          - name: Run QUnit tests
+            run: |
+              npx qunit --browser chromium index.html
 
-      - name: login docker hube
-        run: echo  ${{ secrets.DOCKER_TOKEN }}   
+          - name: Install the Docker Engine
+            uses: docker/login-action@v3
+            with:
+              username: ${{ secrets.DOCKER_USERNAME }}
+              password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build the Docker image
-        env:
-          image_name: test-image
-          version: 1.0.0
-          username: ${{ secrets.DOCKER_USERNAME }}
-        run: |
-          docker build -t $username/$image_name:$version .
+          - name: Build the Docker Image
+            env:
+              image_name: new-image
+              version: 1.0.0
+              username: ${{ secrets.DOCKER_USERNAME }}
+            run: |
+                docker build -t $username/$image_name:$version .
+
+          - name: Push the Docker image to Docker Hub
+            env:
+              image_name: new-image
+              version: 1.0.0
+              username: ${{ secrets.DOCKER_USERNAME }}
+            run: |
+                docker push $username/$image_name:$version

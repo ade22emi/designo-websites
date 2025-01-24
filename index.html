@@ -4,10 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="viewport" content="width=device-width, initial-scale = 1.0, 
+  <meta name="viewport" content="width=device-width, initial-scale = 1.0,
 maximum-scale=1.0, user-scalable=no" />
   <link rel="stylesheet" href="/src/styles/style.css">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.14.0.css"> <!-- Added QUnit CSS here -->
   <title>Frontend Mentor | Designo Agency Website Challenge</title>
 </head>
 
@@ -21,7 +22,6 @@ maximum-scale=1.0, user-scalable=no" />
       <button class="hamburger__button">
         <img src="/assets/shared/mobile/icon-hamburger.svg" alt="icon-hamburger" class="hamburger__image open">
         <img src="/assets/shared/mobile/icon-close.svg" alt="hamburger-close" class="hamburger__image close">
-
       </button>
       <ul class="menu">
         <li class="underline"><a href="/src/Pages/about.html">Our Company</a></li>
@@ -36,10 +36,7 @@ maximum-scale=1.0, user-scalable=no" />
       <div class="card">
         <div class="card__hero">
           <h1 class="card__title">Award-winning custom designs and digital branding solutions</h1>
-          <p class="card__description">With over 10 years in the industry, we are experienced in creating fully
-            responsive
-            websites, app design,
-            and engaging brand experiences. Find out more about our services.</p>
+          <p class="card__description">With over 10 years in the industry, we are experienced in creating fully responsive websites, app design, and engaging brand experiences. Find out more about our services.</p>
           <form method="get" action="/src/Pages/contact.html">
             <button type="submit" class="card__btn btn">Learn more</button>
           </form>
@@ -78,7 +75,7 @@ maximum-scale=1.0, user-scalable=no" />
             <img src="./assets/home/desktop/image-graphic-design.jpg" class="projects__image" alt="">
             <div class="projects__overlay--dark projects__overlay--small projects__overlay--peach"></div>
             <div class="projects__textbox projects__textbox-graphic">
-              <h1 class="projects__title mobile-title">Graphic Design</h2>
+              <h1 class="projects__title mobile-title">Graphic Design</h1>
                 <p class="projects__description"> View Projects <img src="./assets/shared/desktop/icon-right-arrow.svg"
                     class="projects__arrow" alt="">
                 </p>
@@ -99,9 +96,7 @@ maximum-scale=1.0, user-scalable=no" />
               <h3 class="skills__title">Passionate</h3>
               <p class="skills__description">
                 Each project starts with an in-depth brand research to ensure we only create products that serve a
-                purpose.
-                We merge
-                art, design, and technology into exciting new solutions.
+                purpose. We merge art, design, and technology into exciting new solutions.
               </p>
             </div>
           </div>
@@ -110,14 +105,10 @@ maximum-scale=1.0, user-scalable=no" />
             <div>
               <img src="/assets/home/desktop/illustration-resourceful.svg" class="skills__img" alt="" />
             </div>
-
             <div class="skills__textbox">
               <h3 class="skills__title">Resourceful</h3>
               <p class="skills__description"> Everything that we do has a strategic purpose. We use an agile approach in
-                all
-                of our projects and value
-                customer
-                collaboration. It guarantees superior results that fulfill our clients’ needs.
+                all of our projects and value customer collaboration. It guarantees superior results that fulfill our clients’ needs.
               </p>
             </div>
           </div>
@@ -128,12 +119,8 @@ maximum-scale=1.0, user-scalable=no" />
             </div>
             <div class="skills__textbox">
               <h3 class="skills__title">Friendly</h3>
-              <p class="skills__description"> We are a group of enthusiastic folks who know<br> how to put people first.
-                Our
-                success depends on our
-                customers,
-                and we
-                strive to give them the best experience a company can provide.
+              <p class="skills__description"> We are a group of enthusiastic folks who know how to put people first. Our
+                success depends on our customers, and we strive to give them the best experience a company can provide.
               </p>
             </div>
           </div>
@@ -150,21 +137,16 @@ maximum-scale=1.0, user-scalable=no" />
               <p class="contact__description"> Ready to take it to the next level? Contact us today and find out how our
                 expertise can help your business grow.
               </p>
-
             </div>
             <div>
-
               <form method="get" action="/src/Pages/contact.html">
                 <button type="submit" class="contact__btn btn">Get in touch</button>
               </form>
-
-
             </div>
           </div>
         </div>
       </div>
     </section>
-
 
     <footer>
       <div class="container">
@@ -187,8 +169,7 @@ maximum-scale=1.0, user-scalable=no" />
             </ul>
           </div>
         </div>
-        <div class="line">
-        </div>
+        <div class="line"></div>
         <div class="footer__bottom flex flex-column-mobile">
           <div class="footer__contact">
             <p>Designo Central Office<br>
@@ -205,40 +186,7 @@ maximum-scale=1.0, user-scalable=no" />
           <div class="footer__icons-box">
             <ul class="footer__icons flex ">
               <li>
-                <a href="#"><img src="/assets/shared/desktop/icon-facebook.svg" alt="icon-facebook"
-                    class="socials" /></a>
+                <a href="#"><img src="/assets/shared/desktop/icon-facebook.svg" alt="icon-facebook" class="socials" /></a>
               </li>
               <li>
-                <a href="#"><img src="/assets/shared/desktop/icon-youtube.svg" alt="icon-youtube" class="socials" /></a>
-              </li>
-              <li>
-                <a href="#"><img src="/assets/shared/desktop/icon-twitter.svg" alt="icon-twitter" class="socials" /></a>
-              </li>
-              <li>
-                <a href="#"><img src="/assets/shared/desktop/icon-pinterest.svg" alt="icon-pinterest"
-                    class="socials" /></a>
-              </li>
-              <li>
-                <a href="#"><img src="/assets/shared/desktop/icon-instagram.svg" alt="icon-instagram" /></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-
-
-
-
-
-
-
-
-
-
-    <script src="/src/scripts/script.js"></script>
-
-</body>
-
-</html>
+                <a href="#"><img src[_{{{CITATION{{{_1{](https://github.com/yysofiyan/PABWEB-C/tree/cf31bd3408938678b425c6993cf0956da7c4a380/A2.1800125%2Fsiswa%2Findex.php)[_{{{CITATION{{{_2{](https://github.com/Svinolap/homework_8-6/tree/25292664465c472eeb3c156f6d6d06190f3ae212/main.php)[_{{{CITATION{{{_3{](https://github.com/Marjukka-P/henkkis/tree/69e85c73bcafed3190ca456c49f9f32950db68d0/sivustot%2Fetusivu.php)[_{{{CITATION{{{_4{](https://github.com/780281415/y2b/tree/d453812406d0036e7ecfb69ff306abf491b48efb/install.php)[_{{{CITATION{{{_5{](https://github.com/dongfangxuri/zeroDistance/tree/ecf49b14dc08da98917f1316831ae1c257b936be/App%2FRuntime%2FCache%2FHome%2Fdbb02cb1c1c2b54da40f8d87ae6f007b.php)[_{{{CITATION{{{_6{](https://github.com/dpayne713/frontEndMentour-designo/tree/629aa83b9511fcf29692fd31465da651d88a8f89/src%2Fviews%2Fstring-templates%2Findex-body.js)
