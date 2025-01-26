@@ -5,7 +5,7 @@ name: CI
 on:
   push:
     branches:
-      - main  # Trigger on push to the 'main' branch
+      - master # Trigger on push to the 'master' branch
 
 jobs:
   test-and-build:
