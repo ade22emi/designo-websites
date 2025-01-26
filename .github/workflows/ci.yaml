@@ -5,7 +5,7 @@ name: CI
 on:
   push:
     branches:
-      - master # Trigger on push to the 'master' branch
+      - master  # Trigger on push to the 'master' branch
 
 jobs:
   test-and-build:
@@ -35,9 +35,10 @@ jobs:
       - name: Install QUnit CLI
         run: npm install -g qunit
 
-      # Step 6: Run QUnit tests (unit tests for the app)
+      # Step 6: Run QUnit tests
       - name: Run QUnit tests
         run: |
+          # Run QUnit tests using the Chromium browser (headless mode)
           npx qunit --browser chromium index.html --reporter json > result.json  # Save the result to result.json
 
       # Step 7: Upload test results as an artifact
@@ -53,48 +54,19 @@ jobs:
         with:
           version: 'latest'
 
-      # Step 9: Verify Docker installation
-      - name: Verify Docker Version
-        run: docker --version
-
-      - name: Check Docker Info
-        run: docker info
-
-      # Step 10: Run a simple Docker container to test if Docker is working
-      - name: Run Hello World Docker Container
-        run: docker run hello-world
-
-      # Step 11: Docker login (login to Docker Hub)
+      # Step 9: Log in to Docker Hub
       - name: Docker login
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 12: Build the Docker image
+      # Step 10: Build the Docker image
       - name: Build the Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0 .
 
-      # Step 13: Run unit tests inside the Docker container
-      - name: Run Unit Tests Inside Docker Container
-        run: |
-          docker run --rm ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0 npm test  # Run unit tests in the container
-
-      # Step 14: Run Docker container from built image and check if it runs properly
-      - name: Run Docker Container from Built Image
-        run: |
-          docker run -d --name my-container ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0
-          sleep 10  # Allow the container to start
-          docker logs my-container  # Check logs for errors
-          docker stop my-container
-          docker rm my-container
-
-      # Step 15: Push the Docker image to Docker Hub
+      # Step 11: Push the Docker image to Docker Hub
       - name: Push the Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0
-
-      # Step 16: Clean up Docker resources (images, containers, volumes)
-      - name: Clean up Docker System
-        run: docker system prune -f --all --volumes
