@@ -3,58 +3,72 @@ name: CI
 
 # Define when to trigger the workflow
 on:
-  push: # The event that occurs
+  push:
     branches:
-        - master
+      - main  # Trigger on push to the 'main' branch
+
 jobs:
-    test-and-build:
-        runs-on: ubuntu-latest
+  test-and-build:
+    runs-on: ubuntu-latest
 
-        # Define steps to execute
-        steps:
-          - name: Check out the code # This checks out the GitHub repository
-            uses: actions/checkout@v3
+    steps:
+      # Step 1: Checkout the code
+      - name: Check out the code
+        uses: actions/checkout@v3
 
-          - name: Install Chromium browser
-            run: sudo apt-get install -y chromium-browser
+      # Step 2: Set up Node.js environment (necessary for running QUnit tests)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # You can use a different version of Node.js if needed
 
-          - name: Install dependencies
-            run: sudo apt-get install -y npm
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          npm install  # Install your project's dependencies, if any
 
-          - name: Run QUnit tests
-            run: |
-              npx qunit --browser chromium index.html
+      # Step 4: Install Chromium (for headless browser testing)
+      - name: Install Chromium browser
+        run: sudo apt-get install -y chromium-browser
 
-          - name: Install the Docker Engine
-            uses: docker/login-action@v3
-            with:
-              username: ${{ secrets.DOCKER_USERNAME }}
-              password: ${{ secrets.DOCKER_PASSWORD }}
+      # Step 5: Install QUnit CLI (or test runner of your choice)
+      - name: Install QUnit CLI
+        run: npm install -g qunit
 
-          - name: Build the Docker Image
-            env:
-              image_name: new-image
-              version: 1.0.0
-              username: ${{ secrets.DOCKER_USERNAME }}
-            run: |
-                docker build -t $username/$image_name:$version .
+      # Step 6: Run QUnit tests
+      - name: Run QUnit tests
+        run: |
+          # Run QUnit tests using the Chromium browser (headless mode)
+          npx qunit --browser chromium index.html --reporter json > result.json  # Save the result to result.json
 
-          - name: Push the Docker image to Docker Hub
-            env:
-              image_name: new-image
-              version: 1.0.0
-              username: ${{ secrets.DOCKER_USERNAME }}
-            run: |
-                docker push $username/$image_name:$version
-          - name: Run tests inside Docker container
-            run: |
-               docker run --rm ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0 /home/adetutu/designo-website/src/test.js
+      # Step 7: Upload test results as an artifact
+      - name: Upload test results as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: qunit-test-results
+          path: result.json  # This will upload the result.json file as an artifact
 
-              
-              
+      # Step 8: Install Docker Engine (for building the Docker image)
+      - name: Install Docker Engine
+        uses: docker/setup-buildx-action@v2  # For setting up Docker Buildx
+        with:
+          version: 'latest'
 
-          
-
-
-      
-   
+      # Step 9: Log in to Docker Hub
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      # Step 10: Build the Docker image
+      - name: Build the Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0 .
+      - name: Run Unit Tests Inside Docker Container
+        run: |
+            docker run --rm ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0 npm test  # Run unit tests in the container
+        
+      # Step 11: Push the Docker image to Docker Hub
+      - name: Push the Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0
