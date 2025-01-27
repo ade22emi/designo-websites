@@ -69,7 +69,8 @@ jobs:
         id: scan
         with:
           image: ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0
-          fail_on: low  # You can change to 'medium' or 'none' depending on your preference
+          severity-cutoff: medium  # Set the threshold for failing based on severity
+          fail-build: true  # Fail the build if vulnerabilities are found at or above the specified severity level
 
       # Step 10: Push the Docker image to Docker Hub
       - name: Push the Docker image to Docker Hub
