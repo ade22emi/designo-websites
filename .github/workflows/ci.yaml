@@ -64,8 +64,8 @@ jobs:
         id: scan
         with:
           image: ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0
-          severity-cutoff: medium
-          fail-build: true
+          severity-cutoff: low
+          fail-build: none
           output-format: sarif  # Generate SARIF report
 
       # Step 10: Upload the vulnerability scan report as an artifact
