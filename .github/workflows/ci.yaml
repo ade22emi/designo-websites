@@ -22,16 +22,11 @@ jobs:
 
       - name: Copy files to Nginx's root directory
         run: |
-          # Ensure permissions and clean up previous HTML directory
           sudo chmod -R 777 /var/www
           sudo chown -R $USER:$USER /var/www
           sudo rm -rf /var/www/html
           sudo mkdir /var/www/html
-
-          # Copy files from the checked-out code to Nginx's root directory
           sudo cp -r * /var/www/html
-
-          # Restart Nginx to serve the new files
           sudo systemctl restart nginx
           sleep 5
 
@@ -69,10 +64,18 @@ jobs:
         id: scan
         with:
           image: ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0
-          severity-cutoff: low  # Set the threshold for failing based on severity
-          fail-build: none  # Fail the build if vulnerabilities are found at or above the specified severity level
+          severity-cutoff: medium
+          fail-build: true
+          output-format: sarif  # Generate SARIF report
 
-      # Step 10: Push the Docker image to Docker Hub
+      # Step 10: Upload the vulnerability scan report as an artifact
+      - name: Upload Anchore Scan Report as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: anchore-scan-report
+          path: ${{ steps.scan.outputs.report }}  # Path to the generated SARIF report
+          
+      # Step 11: Push the Docker image to Docker Hub
       - name: Push the Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0
