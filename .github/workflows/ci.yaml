@@ -68,6 +68,11 @@ jobs:
         id: scan 
         with: 
           image: ${{ secrets. DOCKER_USERNAME }}/new-image:1.0.0
+      - name: Run Anchore Scan Action
+        uses: anchore/scan-action@v3
+        with:
+            fail_on: low  # This allows the scan to pass even with medium and low vulnerabilities
+        
 
       # Step 9: Push the Docker image to Docker Hub
       - name: Push the Docker image to Docker Hub
