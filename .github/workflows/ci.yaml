@@ -72,6 +72,11 @@ jobs:
         uses: anchore/scan-action@v3
         with:
             fail_on: low  # This allows the scan to pass even with medium and low vulnerabilities
+      - name: Run Anchore Scan Action
+        uses: anchore/scan-action@v3
+        with:
+              fail_on: none  # Disable severity-based failure for testing or development purposes
+          
         
 
       # Step 9: Push the Docker image to Docker Hub
