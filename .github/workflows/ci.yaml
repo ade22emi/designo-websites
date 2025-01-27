@@ -67,7 +67,7 @@ jobs:
         uses: anchore/scan-action@v3
         id: scan 
         with: 
-          image: ${{ secrets. DOCKER_USERNAME }}/NEW-IMAGE:1.0.0
+          image: ${{ secrets. DOCKER_USERNAME }}/new-image:1.0.0
 
       # Step 9: Push the Docker image to Docker Hub
       - name: Push the Docker image to Docker Hub
