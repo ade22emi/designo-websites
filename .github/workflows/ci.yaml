@@ -62,24 +62,16 @@ jobs:
       - name: Build the Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0 .
-      # 9 : scan the docker image for vulnerabilities
-      - name: scan the docker image for vulnerabilties
-        uses: anchore/scan-action@v3
-        id: scan 
-        with: 
-          image: ${{ secrets. DOCKER_USERNAME }}/new-image:1.0.0
-      - name: Run Anchore Scan Action
-        uses: anchore/scan-action@v3
-        with:
-            fail_on: low  # This allows the scan to pass even with medium and low vulnerabilities
-      - name: Run Anchore Scan Action
-        uses: anchore/scan-action@v3
-        with:
-              fail_on: none  # Disable severity-based failure for testing or development purposes
-          
-        
 
-      # Step 9: Push the Docker image to Docker Hub
+      # Step 9: Scan the Docker image for vulnerabilities
+      - name: Scan the Docker image for vulnerabilities
+        uses: anchore/scan-action@v3
+        id: scan
+        with:
+          image: ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0
+          fail_on: low  # You can change to 'medium' or 'none' depending on your preference
+
+      # Step 10: Push the Docker image to Docker Hub
       - name: Push the Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/new-image:1.0.0
